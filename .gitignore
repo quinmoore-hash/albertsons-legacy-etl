@@ -1,0 +1,7 @@
+# Local runtime output - not committed
+data/incoming/
+data/processed/
+data/staging/
+data/errors/
+*.done
+*.gz

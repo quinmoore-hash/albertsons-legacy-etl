@@ -1,0 +1,16 @@
+store_id,sku,product_name,department,region,units,unit_price,revenue,transaction_date,loyalty_id,payment_type
+0412,SKU-0098213,Signature Farms Whole Milk 1gal,dairy,PACIFIC_NW,142,3.49,495.58,07/07/2026,LY-88123,credit
+0412,SKU-0044518,Lucerne Large Eggs Dozen,dairy,PACIFIC_NW,89,2.99,266.11,07/07/2026,LY-42019,debit
+0412,SKU-0102934,O Organics Baby Spinach 5oz,produce,PACIFIC_NW,54,3.99,215.46,07/07/2026,,cash
+0731,SKU-0098213,Signature Farms Whole Milk 1gal,dairy,SOUTHWEST,203,3.59,728.77,07/07/2026,LY-55310,credit
+0731,SKU-0077101,Coca-Cola 12pk 12oz Cans,beverages,SOUTHWEST,167,6.99,1167.33,07/07/2026,LY-19288,credit
+0731,SKU-0061200,Wonder Classic White Bread,bakery,SOUTHWEST,98,2.49,244.02,07/07/2026,,debit
+1058,SKU-0044518,Lucerne Large Eggs Dozen,dairy,MOUNTAIN,76,3.19,242.44,07/07/2026,LY-77654,credit
+1058,SKU-0102934,O Organics Baby Spinach 5oz,produce,MOUNTAIN,41,4.29,175.89,07/07/2026,LY-33421,cash
+1058,SKU-0055009,Tide Liquid Detergent 92oz,household,MOUNTAIN,22,12.99,285.78,07/07/2026,,credit
+1420,SKU-0077101,Coca-Cola 12pk 12oz Cans,beverages,NORTHERN_CAL,188,7.29,1370.52,07/07/2026,LY-90011,debit
+1420,SKU-0061200,Wonder Classic White Bread,bakery,NORTHERN_CAL,110,2.59,284.90,07/07/2026,LY-10502,credit
+1420,SKU-0098213,Signature Farms Whole Milk 1gal,dairy,NORTHERN_CAL,,3.49,N/A,07/07/2026,,cash
+0905,SKU-0055009,Tide Liquid Detergent 92oz,household,SOUTHERN_CAL,35,13.49,472.15,07/07/2026,LY-64890,credit
+0905,SKU-0102934,O Organics Baby Spinach 5oz,produce,SOUTHERN_CAL,63,3.89,245.07,07/07/2026,LY-22107,debit
+0905,SKU-0044518,Lucerne Large Eggs Dozen,dairy,SOUTHERN_CAL,120,2.89,346.80,07/07/2026,,cash

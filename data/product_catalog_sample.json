@@ -1,0 +1,80 @@
+[
+  {
+    "sku": "SKU-0098213",
+    "upc": "021130098213",
+    "name": "Signature Farms Whole Milk 1gal",
+    "department": "dairy",
+    "brand": "Signature Farms",
+    "unit_price": 3.49,
+    "unit_cost": 2.11,
+    "unit_of_measure": "gallon",
+    "private_label": true,
+    "active": true,
+    "last_updated": "2026-06-30"
+  },
+  {
+    "sku": "SKU-0044518",
+    "upc": "021130044518",
+    "name": "Lucerne Large Eggs Dozen",
+    "department": "dairy",
+    "brand": "Lucerne",
+    "unit_price": 2.99,
+    "unit_cost": 1.68,
+    "unit_of_measure": "dozen",
+    "private_label": true,
+    "active": true,
+    "last_updated": "2026-06-30"
+  },
+  {
+    "sku": "SKU-0102934",
+    "upc": "000000102934",
+    "name": "O Organics Baby Spinach 5oz",
+    "department": "produce",
+    "brand": "O Organics",
+    "unit_price": 3.99,
+    "unit_cost": 2.40,
+    "unit_of_measure": "each",
+    "private_label": true,
+    "active": true,
+    "last_updated": "2026-07-01"
+  },
+  {
+    "sku": "SKU-0077101",
+    "upc": "049000077101",
+    "name": "Coca-Cola 12pk 12oz Cans",
+    "department": "beverages",
+    "brand": "Coca-Cola",
+    "unit_price": 6.99,
+    "unit_cost": 4.55,
+    "unit_of_measure": "12pk",
+    "private_label": false,
+    "active": true,
+    "last_updated": "2026-06-28"
+  },
+  {
+    "sku": "SKU-0061200",
+    "upc": "072250006120",
+    "name": "Wonder Classic White Bread",
+    "department": "bakery",
+    "brand": "Wonder",
+    "unit_price": 2.49,
+    "unit_cost": 1.20,
+    "unit_of_measure": "loaf",
+    "private_label": false,
+    "active": true,
+    "last_updated": "2026-06-25"
+  },
+  {
+    "sku": "SKU-0055009",
+    "upc": "037000550099",
+    "name": "Tide Liquid Detergent 92oz",
+    "department": "household",
+    "brand": "Tide",
+    "unit_price": 12.99,
+    "unit_cost": 8.40,
+    "unit_of_measure": "each",
+    "private_label": false,
+    "active": true,
+    "last_updated": "2026-06-20"
+  }
+]

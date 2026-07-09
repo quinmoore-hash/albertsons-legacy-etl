@@ -1,0 +1,13 @@
+=========================================
+Data Quality Report - ETL_20260708_013001
+Generated: Wed Jul  8 01:31:53 PDT 2026
+=========================================
+[2026-07-08 01:31:53] [FAIL] warehouse:connectivity: Snowflake warehouse unreachable (decommissioned post-migration). Skipping warehouse checks.
+[2026-07-08 01:31:54] [PASS] row_count:pos_store_sales_20260708_clean.csv: 48211 data rows
+[2026-07-08 01:31:54] [WARN] null_key:pos_store_sales_20260708_clean.csv: 3 rows with empty key column
+[2026-07-08 01:31:55] [PASS] dupes:pos_store_sales_20260708_clean.csv: no duplicate keys
+
+=========================================
+Summary - ETL_20260708_013001
+Total: 4  Passed: 2  Warn: 1  Failed: 1
+=========================================

@@ -1,0 +1,48 @@
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:88] ==========================================
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:89] Starting Nightly Store ETL: ETL_20260708_013001
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:90] Host: retail-etl-01.albertsons.internal
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:91] Date: Wed Jul  8 01:30:01 PDT 2026
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:92] ==========================================
+[2026-07-08 01:30:01] [INFO] [scripts/run_nightly_etl.sh:99] [Step 1/6] Fetching POS store-sales data...
+[2026-07-08 01:30:02] [INFO] [scripts/fetch_pos_data.sh:35] Fetching POS store-sales for 2026-07-07 -> /opt/albertsons/etl/data/incoming/pos_store_sales_20260708.csv
+[2026-07-08 01:30:19] [WARN] [scripts/fetch_pos_data.sh:57] POS fetch attempt 1/3 failed (HTTP 503), retrying in 10s...
+[2026-07-08 01:30:31] [INFO] [scripts/fetch_pos_data.sh:49] POS fetch OK (HTTP 200), 48211 rows -> /opt/albertsons/etl/data/incoming/pos_store_sales_20260708.csv
+[2026-07-08 01:30:31] [INFO] [scripts/run_nightly_etl.sh:106] [Step 2/6] Extracting reference dimensions from Snowflake...
+[2026-07-08 01:30:31] [INFO] [scripts/extract_from_snowflake.sh:52] Extracting reference dimensions from Snowflake -> /opt/albertsons/etl/data/incoming/dim_reference_20260708.csv
+[2026-07-08 01:30:32] [INFO] [utils/snowflake_helpers.sh:79] [snowsql] Running query against alb_prod.us-east-1/ETL_WH
+[2026-07-08 01:30:52] [ERROR] [utils/snowflake_helpers.sh:101] snowsql query failed (rc=1). Warehouse likely decommissioned post-migration.
+[2026-07-08 01:30:52] [ERROR] [utils/snowflake_helpers.sh:175] Cannot connect to Snowflake (account=alb_prod.us-east-1). Decommissioned after BigQuery migration?
+[2026-07-08 01:30:52] [ERROR] [scripts/extract_from_snowflake.sh:59] Snowflake unreachable. Cannot extract dimensions.
+[2026-07-08 01:30:52] [ERROR] [scripts/run_nightly_etl.sh:112] Snowflake extract failed (warehouse decommissioned post-migration?)
+[2026-07-08 01:30:52] [WARN] [scripts/run_nightly_etl.sh:117] Continuing with last-known dimension cache (if present)
+[2026-07-08 01:30:52] [INFO] [scripts/run_nightly_etl.sh:122] [Step 3/6] Transforming sales data...
+[2026-07-08 01:30:53] [INFO] [scripts/transform_sales.sh:35] Transforming: pos_store_sales_20260708.csv
+[2026-07-08 01:31:12] [INFO] [scripts/transform_sales.sh:80] Transform complete: pos_store_sales_20260708_clean.csv (48211 rows)
+[2026-07-08 01:31:12] [INFO] [scripts/run_nightly_etl.sh:135] [Step 4/6] Loading data into warehouse...
+[2026-07-08 01:31:12] [INFO] [scripts/load_warehouse.sh:60] Loading pos_store_sales_20260708_clean.csv -> STORE_OPS.FACT_STORE_SALES
+[2026-07-08 01:31:12] [INFO] [utils/snowflake_helpers.sh:79] [snowsql] Running query against alb_prod.us-east-1/ETL_WH
+[2026-07-08 01:31:32] [ERROR] [utils/snowflake_helpers.sh:101] snowsql query failed (rc=1). Warehouse likely decommissioned post-migration.
+[2026-07-08 01:31:32] [ERROR] [utils/snowflake_helpers.sh:175] Cannot connect to Snowflake (account=alb_prod.us-east-1). Decommissioned after BigQuery migration?
+[2026-07-08 01:31:32] [ERROR] [scripts/load_warehouse.sh:71] Warehouse unreachable; aborting load of pos_store_sales_20260708_clean.csv
+[2026-07-08 01:31:32] [ERROR] [scripts/run_nightly_etl.sh:140] LOAD: pos_store_sales_20260708_clean.csv failed
+[2026-07-08 01:31:32] [INFO] [scripts/run_nightly_etl.sh:145] [Step 5/6] Running data quality checks...
+[2026-07-08 01:31:33] [INFO] [scripts/data_quality_check.sh:60] Attempting warehouse-side row count check...
+[2026-07-08 01:31:53] [ERROR] [utils/snowflake_helpers.sh:175] Cannot connect to Snowflake (account=alb_prod.us-east-1). Decommissioned after BigQuery migration?
+[2026-07-08 01:31:53] [INFO] [scripts/data_quality_check.sh:52] DQ [FAIL] warehouse:connectivity: Snowflake warehouse unreachable (decommissioned post-migration). Skipping warehouse checks.
+[2026-07-08 01:31:54] [INFO] [scripts/data_quality_check.sh:52] DQ [PASS] row_count:pos_store_sales_20260708_clean.csv: 48211 data rows
+[2026-07-08 01:31:54] [INFO] [scripts/data_quality_check.sh:52] DQ [WARN] null_key:pos_store_sales_20260708_clean.csv: 3 rows with empty key column
+[2026-07-08 01:31:55] [INFO] [scripts/data_quality_check.sh:52] DQ [PASS] dupes:pos_store_sales_20260708_clean.csv: no duplicate keys
+[2026-07-08 01:31:55] [INFO] [scripts/data_quality_check.sh:100] DQ report -> /var/log/albertsons/etl/dq_report_20260708.txt
+[2026-07-08 01:31:55] [INFO] [scripts/run_nightly_etl.sh:150] [Step 6/6] Archiving processed files...
+[2026-07-08 01:31:56] [INFO] [utils/file_utils.sh:130] Compressed: /opt/albertsons/etl/data/staging/pos_store_sales_20260708_clean.csv -> /opt/albertsons/etl/data/staging/pos_store_sales_20260708_clean.csv.gz
+[2026-07-08 01:31:56] [WARN] [scripts/archive_files.sh:52] NAS share /mnt/nas/retail-etl/archive not mounted; skipping share copy
+[2026-07-08 01:31:56] [WARN] [scripts/archive_files.sh:70] gsutil not available; skipping GCS upload (see migration TODO)
+[2026-07-08 01:31:56] [INFO] [scripts/archive_files.sh:73] Archive complete: 1 file(s) compressed
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:56] ==========================================
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:57] ETL Run Summary: ETL_20260708_013001
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:58] Duration: 115s
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:59] Steps Completed: 4
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:60] Steps Failed: 2
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:61] Total Rows: 48211
+[2026-07-08 01:31:56] [INFO] [scripts/run_nightly_etl.sh:62] ==========================================
+[2026-07-08 01:31:56] [WARN] [utils/notify.sh:98] Sending alert [WARNING]: ETL ETL_20260708_013001 completed with errors: EXTRACT: snowflake dimension extract failed / LOAD: pos_store_sales_20260708_clean.csv failed
