@@ -46,6 +46,12 @@ def cleanup_local(config: Config | None = None) -> int:
     total += _delete_older_than(config.data_output_dir, retention)
     total += _delete_older_than(config.data_archive_dir, retention)
     total += _delete_older_than(config.data_error_dir, 60)
+    # Staging leftovers: the archive step removes clean CSVs on success, but a
+    # failed/skipped archive can strand *_clean.csv / *.tmp files here. Prune
+    # stale ones so they aren't re-archived on a later run. A short window
+    # (not the full retention) keeps this from racing an in-flight run.
+    total += _delete_older_than(config.data_staging_dir, 1, "*_clean.csv")
+    total += _delete_older_than(config.data_staging_dir, 1, "*.tmp")
     total += _delete_older_than(config.log_dir, config.log_retention_days, "*.log")
     total += _delete_older_than(config.log_dir, config.log_retention_days, "*.log.gz")
 

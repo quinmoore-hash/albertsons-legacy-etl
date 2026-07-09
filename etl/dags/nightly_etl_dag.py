@@ -14,7 +14,7 @@ from the environment / ``configs/pipeline.env`` by :func:`etl.config.load_config
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 # Airflow is only available in the Composer runtime; guard the import so the
 # rest of the package (and the test suite) can be imported without it.
@@ -82,6 +82,11 @@ _TASKS = [
 
 
 if _AIRFLOW_AVAILABLE:
+    # Airflow interprets the cron schedule in the start_date's timezone. Use a
+    # PT-aware start_date (pendulum ships with Airflow) so "30 1 * * *" fires at
+    # 01:30 America/Los_Angeles, matching the legacy cron — not 01:30 UTC.
+    import pendulum
+
     default_args = {
         "owner": "store-data-ops",
         "retries": 2,
@@ -96,7 +101,7 @@ if _AIRFLOW_AVAILABLE:
         default_args=default_args,
         # 01:30 America/Los_Angeles, matching the legacy cron schedule.
         schedule_interval="30 1 * * *",
-        start_date=datetime(2026, 7, 1),
+        start_date=pendulum.datetime(2026, 7, 1, tz="America/Los_Angeles"),
         catchup=False,
         max_active_runs=1,
         tags=["etl", "bigquery", "store-ops"],

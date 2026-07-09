@@ -96,6 +96,12 @@ def send_email(
 
     try:
         with smtplib.SMTP(config.smtp_host, config.smtp_port, timeout=timeout) as smtp:
+            # Upgrade to TLS so alert contents aren't sent in cleartext. Skip
+            # only if the server doesn't advertise STARTTLS.
+            smtp.ehlo()
+            if smtp.has_extn("starttls"):
+                smtp.starttls()
+                smtp.ehlo()
             smtp.send_message(msg)
         return True
     except (smtplib.SMTPException, OSError) as exc:
