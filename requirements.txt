@@ -1,0 +1,12 @@
+# Albertsons ETL pipeline runtime dependencies.
+# Pinned to versions published well before the migration cut-over.
+google-cloud-bigquery==3.25.0
+google-cloud-storage==2.18.2
+google-cloud-secret-manager==2.20.2
+requests==2.32.3
+
+# Optional: pandas is only required for BigQuery .to_dataframe() helpers.
+# Install with:  pip install -r requirements.txt pandas==2.2.2
+# pandas==2.2.2
+
+# Dev / test tooling (install with: pip install -r requirements-dev.txt)
