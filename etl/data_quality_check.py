@@ -18,6 +18,7 @@ from datetime import datetime
 from pathlib import Path
 
 from etl.config import Config, load_config
+from etl.load_warehouse import TABLE_MAP
 from etl.logging_setup import configure_logging, get_logger
 from etl.warehouse import BigQueryClient
 
@@ -116,7 +117,11 @@ def _check_warehouse(
     report: DQReport, config: Config, client: BigQueryClient | None
 ) -> None:
     client = client or BigQueryClient(config)
-    table = f"{config.gcp_project}.{config.bq_dataset}.fact_store_sales"
+    # Reuse the loader's mapping so the DQ target can't drift from the load
+    # target. BigQuery table names are case-sensitive, so this must match the
+    # name data is actually loaded into (FACT_STORE_SALES).
+    fact_table = TABLE_MAP["pos_store_sales"]
+    table = f"{config.gcp_project}.{config.bq_dataset}.{fact_table}"
     sql = (
         f"SELECT COUNT(*) FROM `{table}` "
         "WHERE _load_date = CURRENT_DATE()"
