@@ -3,5 +3,22 @@ data/incoming/
 data/processed/
 data/staging/
 data/errors/
+data/archive/
 *.done
 *.gz
+
+# Generated logs / DQ reports (dated samples are kept intentionally)
+logs/etl_*.log
+logs/dq_report_*.txt
+!logs/etl_20260708.log
+!logs/dq_report_20260708.txt
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+build/
+dist/

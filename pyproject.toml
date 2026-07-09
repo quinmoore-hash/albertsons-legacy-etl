@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "albertsons-etl"
+version = "1.0.0"
+description = "Albertsons store ETL pipeline (BigQuery/GCS), migrated from legacy Bash + cron."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Proprietary" }
+authors = [
+    { name = "Store Data Ops", email = "store-data-ops@albertsons.com" },
+]
+dependencies = [
+    "google-cloud-bigquery==3.25.0",
+    "google-cloud-storage==2.18.2",
+    "google-cloud-secret-manager==2.20.2",
+    "requests==2.32.3",
+    "pandas==2.2.2",
+    "tenacity==8.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.2.2",
+]
+
+[project.scripts]
+etl-fetch-pos = "etl.fetch_pos_data:main"
+etl-extract-dimensions = "etl.extract_dimensions:main"
+etl-transform-sales = "etl.transform_sales:main"
+etl-load-warehouse = "etl.load_warehouse:main"
+etl-data-quality-check = "etl.data_quality_check:main"
+etl-archive-files = "etl.archive_files:main"
+etl-cleanup-old-data = "etl.cleanup_old_data:main"
+etl-run-nightly = "etl.run_nightly_etl:main"
+
+[tool.setuptools.packages.find]
+include = ["etl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
