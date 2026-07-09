@@ -67,6 +67,29 @@ def test_warehouse_assertion_zero_rows_fails(config):
     assert report.failed == 1
 
 
+def test_warehouse_query_targets_uppercase_load_table(config):
+    """DQ must query the same (case-sensitive) table the loader writes to."""
+
+    class CapturingBQClient(FakeBQClient):
+        def __init__(self):
+            super().__init__(rows=[{"c": 5}])
+            self.sql = None
+
+        def query(self, sql, **kwargs):
+            self.sql = sql
+            return super().query(sql, **kwargs)
+
+    _write(
+        config.data_staging_dir / "pos_store_sales_clean.csv",
+        "store_id,units\n0412,10\n",
+    )
+    inner = CapturingBQClient()
+    client = BigQueryClient(config=config, client=inner)
+    run_dq_checks("DQ_TEST", config=config, client=client, check_warehouse=True)
+    assert "FACT_STORE_SALES" in inner.sql
+    assert "fact_store_sales" not in inner.sql
+
+
 def test_detect_target_table():
     assert detect_target_table("pos_store_sales_20260708_clean.csv") == "FACT_STORE_SALES"
     assert detect_target_table("inventory_20260708_clean.csv") == "FACT_INVENTORY"
