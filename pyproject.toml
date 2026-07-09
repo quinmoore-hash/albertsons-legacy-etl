@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "albertsons-etl"
+version = "1.0.0"
+description = "Albertsons store ETL pipeline (Python, BigQuery/GCS target)"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Store Data Ops", email = "store-data-ops@albertsons.com" },
+]
+dependencies = [
+    "google-cloud-bigquery==3.25.0",
+    "google-cloud-storage==2.18.2",
+    "google-cloud-secret-manager==2.20.2",
+    "requests==2.32.3",
+]
+
+[project.optional-dependencies]
+pandas = ["pandas==2.2.2"]
+dev = [
+    "pytest==8.2.2",
+    "ruff==0.5.0",
+]
+
+[project.scripts]
+albertsons-etl = "etl.run_nightly_etl:main"
+albertsons-etl-fetch = "etl.fetch_pos_data:main"
+albertsons-etl-extract = "etl.extract_dimensions:main"
+albertsons-etl-transform = "etl.transform_sales:main"
+albertsons-etl-load = "etl.load_warehouse:main"
+albertsons-etl-dq = "etl.data_quality_check:main"
+albertsons-etl-archive = "etl.archive_files:main"
+albertsons-etl-cleanup = "etl.cleanup_old_data:main"
+albertsons-etl-check-deps = "etl.check_dependencies:main"
+
+[tool.setuptools.packages.find]
+include = ["etl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = ["E501"]
